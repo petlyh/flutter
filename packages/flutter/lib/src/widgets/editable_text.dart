@@ -3892,17 +3892,6 @@ class EditableTextState extends State<EditableText> with AutomaticKeepAliveClien
     // sending multiple `TextInput.updateEditingValue` messages.
     beginBatchEdit();
     _value = value;
-    // Changes made by the keyboard can sometimes be "out of band" for listening
-    // components, so always send those events, even if we didn't think it
-    // changed. Also, the user long pressing should always send a selection change
-    // as well.
-    if (selectionChanged ||
-        (userInteraction &&
-        (cause == SelectionChangedCause.longPress ||
-         cause == SelectionChangedCause.keyboard))) {
-      _handleSelectionChanged(_value.selection, cause);
-      _bringIntoViewBySelectionState(oldTextSelection, value.selection, cause);
-    }
     final String currentText = _value.text;
     if (oldValue.text != currentText) {
       try {
